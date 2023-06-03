@@ -1,0 +1,69 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>supervised_user_circle</mat-icon>
+    </button>
+    <span>Tasky</span>
+    <span class="example-spacer"></span>
+    <button mat-flat-button color="warn" (click)="openDialog()">Add Task</button>
+</mat-toolbar>
+
+<div class="container">
+  <div style="margin-top: 10px;">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="appliedFilter($event)" placeholder="Ex. " #input>
+    </mat-form-field>
+    
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+    
+        <!-- Title Column -->
+        <ng-container matColumnDef="taskTitle">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Title </th>
+          <td mat-cell *matCellDef="let row"> {{row.taskTitle}} </td>
+        </ng-container>
+    
+        <!-- Description Column -->
+        <ng-container matColumnDef="taskDescription">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Description </th>
+          <td mat-cell *matCellDef="let row"> {{row.taskDescription}} </td>
+        </ng-container>
+    
+        <!-- Date Column -->
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.dueDate | date}} </td>
+        </ng-container>
+
+        <!-- Priority Column -->
+        <ng-container matColumnDef="taskPriority">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Priority </th>
+          <td mat-cell *matCellDef="let row"> {{row.taskPriority}} </td>
+        </ng-container>
+
+        <!-- Edit/Delete Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="editTask(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteTask(row.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </div>
+</div>

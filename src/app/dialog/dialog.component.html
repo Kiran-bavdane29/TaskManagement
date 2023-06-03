@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Add New Task</h1>
+<div mat-dialog-content>
+    <form [formGroup]="taskForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Task Title</mat-label>
+            <input formControlName="taskTitle" matInput placeholder="Title">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <textarea formControlName="taskDescription" matInput></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Due Date</mat-label>
+            <input formControlName="dueDate" matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <label for="TaskPriority"><h1>Task Priority</h1></label>
+        <mat-radio-group formControlName="taskPriority" class="example-radio-group">
+            <mat-radio-button class="example-radio-button" *ngFor="let TaskPriority of TaskPriorities" [value]="TaskPriority">
+                {{TaskPriority}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </form>
+</div>
+<div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+    <button style="margin-left: 5px;" mat-raised-button color="primary" (click)="AddTask()">{{actionBtn}}</button>
+</div>
